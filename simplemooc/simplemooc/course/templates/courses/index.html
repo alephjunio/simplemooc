@@ -1,0 +1,56 @@
+<!doctype html>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="text-header">Lista de Cursos</h1>
+            <hr>
+            <p>Lista de Cursos disponiveis na Plataforma Simple MOOC.</p>
+        </div>
+        {% for course in courses %}
+
+        <div class="col-md-12">
+            <hr>
+            <div class="row"><!--Card-->
+                <!--Card Dark-->
+                <div class="card card-dark">
+                    <div class="col-md-3">
+                        <!--Card image-->
+                        <div class="view overlay hm-white-slight">
+                            {% if course.image %}
+                            <img src="{{ course.image.url }}"  class="img-fluid img-card " alt="{{ course.name }}">
+                            {% else %}
+                            <img src="{% static 'img/courses/default.png'%}"  class="img-fluid img-card " alt="{{ course.name }}">
+                            {% endif%}
+                            <a>
+                                <div class="mask waves-effect waves-light"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <!--/.Card image-->
+                    <!--Card content-->
+                    <div class="col-md-9">
+                        <!--Social shares button-->
+                        <a class="activator"><i class="fa fa-share-alt"></i></a>
+                        <!--Title-->
+                        <h4 class="card-title">{{ course.name }}</h4>
+                        <hr>
+                        <!--Text-->
+                            {{ course.description |linebreaks}}
+                        <a href="#" class="d-flex flex-row-reverse"><h5 class="waves-effect waves-light p-2">Leia Mais <i class="fa fa-chevron-right"></i></h5></a>
+                    </div>
+                    <!--/.Card content-->
+                </div>
+            </div>
+            <!--/.Card Dark-->
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+</div>
+{% endblock %}
