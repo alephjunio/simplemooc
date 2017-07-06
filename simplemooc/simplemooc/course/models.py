@@ -1,4 +1,6 @@
+from django.core.urlresolvers import reverse
 from django.db import models
+
 
 
 class CourseManager(models.Manager):
@@ -17,6 +19,7 @@ class Course(models.Model):
         slug = models.SlugField('Atalho')
         description = models.TextField('Descrição', blank=True)
         start_date = models.DateField('Data de Inicio', null=True, blank=True)
+        about = models.TextField('Sobre o Curso', blank=True)
         image = models.ImageField(upload_to='course/images', verbose_name='Imagem', null=True, blank=True)
 
         created_at = models.DateTimeField('Criado em', auto_now_add=True)
@@ -28,6 +31,11 @@ class Course(models.Model):
 #convertendo sainda de object e class para nome do object
         def __str__(self):
             return self.name
+
+#contruindo urls amigaveis de acordo com slug
+        @models.permalink
+        def get_absolute_url(self):
+            return ('course:details',(),{'slug': self.slug })
 
 #traduzindo nomes atraves de metas
         class Meta:

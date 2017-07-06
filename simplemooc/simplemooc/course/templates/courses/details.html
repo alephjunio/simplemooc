@@ -1,0 +1,66 @@
+<!doctype html>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12 jumbotron">
+        <div class="col-md-offset-1">
+            <h3 class="text-header">{{ course.name }}</h3>
+            <p>
+                {{ course.description }}
+            </p>
+            <button class="button-success pure-button" type="button" name="button">Inscreva-se <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+            <button href="{% url 'course:index' %}" class="button-warning pure-button" type="button" name="button">voltar<i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="row"><!--Card-->
+                <!--Card Dark-->
+                <div class="card card-dark">
+                    <!--Card content-->
+                    <div class="col-md-9">
+                        <!--Social shares button-->
+                        <a class="activator"><i class="fa fa-share-alt"></i></a>
+                        <!--Title-->
+                        <div class="col-md-3">
+                            <p>
+                                <b>SOBRE O CURSO</b>
+                            </p>
+                            <hr>
+                        </div>
+
+                        <div class="col-md-10">
+                            {{ course.about | linebreaks}}
+                        </div>
+                        <!--Text-->
+                    </div>
+                    <!--/.Card content-->
+                    <br>
+                    <div class="col-md-3">
+                        <!--Card image-->
+                        <div class="view overlay hm-white-slight">
+                            {% if course.image %}
+                            <img src="{{ course.image.url }}"  class="img-fluid" width="400px" height="300px" alt="{{ course.name }}">
+                            {% else %}
+                            <img src="{% static 'img/courses/default.png'%}"  class="img-fluid img-card " alt="{{ course.name }}">
+                            {% endif%}
+                            <a>
+                                <div class="mask waves-effect waves-light"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <!--/.Card image-->
+
+                </div>
+            </div>
+            <!--/.Card Dark-->
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
