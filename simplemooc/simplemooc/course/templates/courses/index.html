@@ -22,9 +22,9 @@
                         <div class="view overlay hm-white-slight">
                             <a href="{{ course.get_absolute_url }}">
                             {% if course.image %}
-                            <img src="{{ course.image.url }}"  width="230px" height="190px" class="img-fluid" alt="{{ course.name }}">
+                            <img src="{{ course.image.url }}" class="img-rounded" alt="{{ course.name }}" width="270" height="236">
                             {% else %}
-                            <img src="{% static 'img/courses/default.png'%}"  class="img-fluid img-card" alt="{{ course.name }}">
+                            <img src="{% static 'img/courses/default.png'%}" class="img-thumbnail" alt="{{ course.name }}" width="260" height="236">
                             {% endif%}
                             </a>
                         </div>
