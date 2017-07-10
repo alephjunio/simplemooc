@@ -47,27 +47,49 @@
                         {% else %}
                         <img src="{% static 'img/courses/default.png'%}"  width="350" height="300"  alt="{{ course.name }}">
                         {% endif%}
+
+                        <br><br><br>
+                        <b class="doubt">DUVIDAS ?</b>
+                        <hr>
+                        <a class="pure-button" href="#mensage">
+                            Fale Conosco
+                        </a>
                     </div>
                 </div>
-
-
-                <!--/.Card image-->
-
-            </div>
-
-            <div class="col-md-3">
-                <br><br>
-                <b class="doubt">DUVIDAS ?</b>
-                <br>
-                <br>
-                <a class="pure-button" href="{% url 'core:contact' %}">
-                    Fale Conosco
-                </a>
-
             </div>
         </div>
-        <!--/.Card Dark-->
+    </div>
 
+
+    <div id="mensage" class="l-box-lrg pure-u-3-5 pure-u-md-2-5">
+
+        <h3>Tire sua dúvida sobre o curso</h3>
+        <hr>
+        {% if is_valid %}
+        <div class="text-center alert-success">
+            <p>Mensagem Enviada com sucesso ! :D</p>
+        </div>
+        {% endif%}
+        <form method="POST" class="pure-form pure-form-stacked">
+            <fieldset>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="pure-control-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                    {% for error in field.errors %}
+                    <ul>
+                        <li>{{ error }}</li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                <button type="submit" class="pure-button button-success">Enviar</button>
+            </fieldset>
+        </form>
     </div>
 </div>
 

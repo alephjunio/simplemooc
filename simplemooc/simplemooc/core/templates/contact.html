@@ -1,45 +1,46 @@
 <!doctype html>
 {% extends "base.html" %}
 {% block content %}
-    <div class="content">
-        <h2 class="content-head is-center">Dolore magna aliqua. Uis aute irure.</h2>
+<div class="content">
+    <h2 class="content-head is-center">Dolore magna aliqua. Uis aute irure.</h2>
 
-        <div class="pure-g">
-            <div class="l-box-lrg pure-u-2 pure-u-md-2-5">
-                <form class="pure-form pure-form-stacked">
-                    <fieldset>
+    <div class="pure-g">
+        <div class="l-box-lrg pure-u-3-5 pure-u-md-2-5">
+            <form action="" method="" class="pure-form pure-form-aligned">
+                <fieldset>
+                    <div class="pure-control-group">
+                        <input id="name" type="text" placeholder="Nome" autofocus  required>
+                    </div>
 
-                        <label for="name">Nome</label>
-                        <input id="name" name ="name" ype="text" placeholder="Jhon">
+                    <div class="pure-control-group">
+                        <input id="email" type="email" placeholder="Email" required>
+                    </div>
 
+                    <div class="pure-control-group">
+                        <textarea id="mensage"  class="pure-input-1" placeholder="Mensagem..." required></textarea>
+                    </div>
 
-                        <label for="email">E-mail</label>
-                        <input id="email" name ="email" ype="email" placeholder="jhon@exemple.com">
+                        <button type="submit" class="pure-button pure-button-primary">Enviar</button>
+                </fieldset>
+            </form>
+        </div>
 
-                        <label for="msg">Mensagem/Duvida</label>
-                        <textarea id ="msg" name="mensage" placeholder="Your Password"></textarea>
+        <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+            <h4>Contato</h4>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat.
+            </p>
 
-                        <button type="submit" class="pure-button">Enviar</button>
-                    </fieldset>
-                </form>
-            </div>
-
-            <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
-                <h4>Contact Us</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.
-                </p>
-
-                <h4>More Information</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-            </div>
+            <h4>Mais Informações</h4>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua.
+            </p>
         </div>
     </div>
+</div>
 
 {% endblock %}
