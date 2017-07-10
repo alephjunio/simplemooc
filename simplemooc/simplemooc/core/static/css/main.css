@@ -3,6 +3,12 @@
   height: 70%;
 }
 
+.doubt{
+  color:black;
+  font-family: monospace;
+  border-bottom: 1px solid #ccc;
+}
+
 .color-footer{
   background-color: #111111;
 }
