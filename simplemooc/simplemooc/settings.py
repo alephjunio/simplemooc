@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 #adicionando novos apps
     'simplemooc.core',
+    'simplemooc.accounts',
     'simplemooc.course',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -141,3 +143,10 @@ EMAIL_PORT = 587
 
 
 CONTACT_EMAIL = 'contato@simplemooc.com'
+
+
+
+#Auth - VARIAVEIS DE ACCOUNTS
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'core:home'
+LOGOUT_URL = 'accounts:logout'

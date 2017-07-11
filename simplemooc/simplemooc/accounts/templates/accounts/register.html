@@ -1,0 +1,26 @@
+<!doctype html>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="pure-g">
+    <div class="pure-u-9-24">
+    </div>
+    <div class="pure-u-7-24">
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Cadastrar-se</legend>
+                <h5>Informe seus dados para cadastro</h5>
+                 {% for field in form   %}
+                {{ field.label_tag }}
+                {{ field }}
+                <h6> {{ field.help_text }}</h6>
+                {{ field.errors }}
+                {% endfor %}
+                <br>
+                <button type="submit" class="pure-button pure-button-primary">Cadastrar</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}
