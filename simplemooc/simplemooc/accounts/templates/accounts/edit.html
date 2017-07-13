@@ -1,0 +1,38 @@
+{% extends "accounts/dashboard.html" %}
+{% load static %}
+{% block  breadcrumb %}
+{{ block.super}}
+<li><a href="{% url 'accounts:edit' %}">Editar Conta</a></li>
+{% endblock  %}
+
+{% block dashboard_content %}
+{% if success %}
+<div class="alert alert-success">
+    <p>Imformações atualizadas com sucesso! :D</p>
+</div>
+{% else %}
+        <p>Informe novos dados para atualização</p>
+{% endif %}
+
+
+
+<form class="pure-form pure-form-stacked" method="POST">
+    {% csrf_token %}
+    <fieldset>
+
+        {{ form.non.field.errors }}
+         {% for field in form   %}
+        {{ field.label_tag}}
+        {{ field }}
+        <h6> {{ field.help_text }}</h6>
+        {% if field.errors  %}
+        <div class="alert alert-danger">
+            {{ field.errors }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <br>
+        <button type="submit" class="pure-button pure-button-primary">Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+    </fieldset>
+</form>
+{% endblock  %}

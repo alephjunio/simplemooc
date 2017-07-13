@@ -17,6 +17,16 @@
   font-weight:bold;
 }
 
+.box-panel{
+ border: 1px solid #CDC9C9;
+ padding: 3%;
+
+ /*-webkit-box-shadow: 5px 4px 1px rgba(50, 50, 50, 0.77);
+		-moz-box-shadow:    5px 4px 1px rgba(50, 50, 50, 0.77);
+    -o-box-shadow:    5px 4px 1px rgba(50, 50, 50, 0.77);
+		box-shadow:         5px 4px 1px rgba(50, 50, 50, 0.77);*/
+}
+
 
 .button-success,
        .button-error,
@@ -42,3 +52,21 @@
        .button-secondary {
            background: rgb(66, 184, 221); /* this is a light blue */
        }
+
+.breadcrumb-inverse {
+  background-color:transparent ;
+}
+
+.link-panel-list{
+  color:#7F8C8D;
+
+}
+
+.link-panel-list:hover{
+  color:#7F8C8D;
+  text-decoration: none;
+}
+
+.activate-yellow:hover{
+  background-color: #FFF0A0;
+}

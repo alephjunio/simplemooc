@@ -1,0 +1,64 @@
+<!doctype html>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="pure-g">
+
+  <div class="pure-u-24-24">
+    <ol class="breadcrumb breadcrumb-inverse">
+      {% block  breadcrumb %}
+      <li><a href="{% url 'core:home' %}">Home</a></li>
+      <li><a href="{% url 'accounts:dashboard' %}">Meu Painel</a></li>
+      {% endblock  %}
+    </ol>
+  </div>
+
+  <div class="pure-u-1-24">
+  </div>
+
+  <div class="pure-u-6-24">
+
+    <legend class="text-center"><h3><b>Menu Painel</b></h3></legend>
+
+    <!--Card Light-->
+    <div class="card box-panel">
+      <!--Card image-->
+      <div class="view overlay hm-white-slight">
+
+      </div>
+      <!--/.Card image-->
+      <!--Card content-->
+      <div class="card-block">
+        <!--Social shares button-->
+        <a class="activator"><i class="fa fa-share-alt"></i></a>
+
+        <ul class="list-group">
+          <h4 class="card-title">Meus Cursos</h4>
+          <li class="list-group-item activate-yellow">Cursos 1</li>
+          <li class="list-group-item activate-yellow">Cursos 2</li>
+          <li class="list-group-item activate-yellow">Cursos 3</li>
+
+          <h4 class="card-title">Minha Conta</h4>
+           <a  class="link-panel-list" href="{% url 'accounts:edit' %}"><li class="list-group-item activate-yellow">Editar Conta</li></a>
+           <a  class="link-panel-list" href="{% url 'accounts:edit_password' %}"><li class="list-group-item activate-yellow">Atualizar Senha</li></a>
+        </ul>
+        <!--Text-->
+      </div>
+      <!--/.Card content-->
+    </div>
+    <!--/.Card Light-->
+  </div>
+  <div class="pure-u-1-24">
+  </div>
+
+  <div class="pure-u-2-5">
+    {% block dashboard_content %}
+    <h1>Usuário: {{ user }}</h1>
+    <h1>Email: {{ user.email }}</h1>
+    {% endblock  %}
+
+
+  </div>
+</div>
+{% endblock %}

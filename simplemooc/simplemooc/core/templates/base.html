@@ -38,6 +38,7 @@
         <li class="pure-menu-item"><a href="{% url 'course:index' %}" class="pure-menu-link">Cursos</a></li>
         <li class="pure-menu-item"><a href="{% url 'core:contact' %}" class="pure-menu-link">Contato</a></li>
         {% if user.is_authenticated %}
+        <li class="pure-menu-item"><a href="{% url 'accounts:dashboard' %}" class="pure-menu-link">Meu Painel</a></li>
         <li class="pure-menu-item"><a href="{% url 'accounts:logout' %}" class="pure-menu-link">Sair</a></li>
         {% else %}
         <li class="pure-menu-item"><a href="{% url 'accounts:login' %}" class="pure-menu-link">Entrar</a></li>

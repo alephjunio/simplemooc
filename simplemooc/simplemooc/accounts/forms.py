@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-
+#realizar registro de usuarios
 class RegisterForm(UserCreationForm):
 
         email = forms.EmailField(label='E-mail')
@@ -24,3 +24,21 @@ class RegisterForm(UserCreationForm):
                 if commit:
                    user.save()
                 return user
+
+
+#realizar editar de usuarios
+class EditAccountForm(forms.ModelForm):
+
+    #consultar email para validar se já é existente em base de dados
+    def clean_email(self):
+        #capturar email
+        email = self.cleaned_data['email']
+        query_set = User.objects.filter(email=email).exclude(pk=self.instance.pk)
+        if query_set.exists():
+            raise forms.ValidationError('Já existe usuáior com este E-mail')
+        return email
+
+    #informando quais campos podera ser editados pelo usuario
+    class Meta:
+        model = User
+        fields = ['username','email','first_name','last_name']
