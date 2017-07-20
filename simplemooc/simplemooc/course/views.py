@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 #importando o model de cursos para trabalhar com base de dados
 from .models import Course
 #importando formulario de cursos/duvidas
 from .forms import ContactCourse
+from django.contrib.auth.decorators import login_required
+from simplemooc.accounts.models import Enrollment
+
 
 def index(request):
     #buscando todos os cursos
@@ -36,3 +39,12 @@ def details(request, slug):
     context['form'] = form
     context['course'] = course
     return render(request, templateName,context)
+
+@login_required
+def enrollment(request,slug):
+     #buscando curso deacordo com sua chave primaria, caso não exista tranferir usuario para pagina de erro 404.
+     course = get_object_or_404(Course, slug=slug)
+     enrollment ,created = Enrollment.objects.get_or_create(user=request.user,course=course)
+    #  if created:
+    #      enrollment.active()
+     return redirect('accounts:dashboard')

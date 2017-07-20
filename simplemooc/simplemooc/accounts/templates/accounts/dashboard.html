@@ -17,7 +17,7 @@
   <div class="pure-u-1-24">
   </div>
 
-  <div class="pure-u-6-24">
+  <div class="pure-u-7-24">
 
     <legend class="text-center"><h3><b>Menu Painel</b></h3></legend>
 
@@ -31,15 +31,15 @@
       <!--Card content-->
       <div class="card-block">
         <!--Social shares button-->
-        <a class="activator"><i class="fa fa-share-alt"></i></a>
-
         <ul class="list-group">
           <h4 class="card-title">Meus Cursos</h4>
+          <hr>
           <li class="list-group-item activate-yellow">Cursos 1</li>
           <li class="list-group-item activate-yellow">Cursos 2</li>
           <li class="list-group-item activate-yellow">Cursos 3</li>
-          <hr>
-          <h4 class="card-title">Minha Conta</h4>
+
+          <h4 class="card-title">Minha Conta<h4/>
+            <hr>
            <a  class="link-panel-list" href="{% url 'accounts:edit' %}"><li class="list-group-item activate-yellow">Editar Conta</li></a>
            <a  class="link-panel-list" href="{% url 'accounts:edit_password' %}"><li class="list-group-item activate-yellow">Atualizar Senha</li></a>
         </ul>

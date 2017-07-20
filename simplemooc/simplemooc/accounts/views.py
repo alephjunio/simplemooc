@@ -1,14 +1,21 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 #importando formulario de registro de contas do django
-from django.contrib.auth.forms import UserCreationForm , PasswordChangeForm
+from django.contrib.auth.forms import (UserCreationForm , PasswordChangeForm,
+     SetPasswordForm)
 #importando auth e login próprio django
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 #importando app django para ser solicitado login para acessar pagina
 from django.contrib.auth.decorators import login_required
 #importando settings raiz
 from django.conf import settings
 #importando formulario personalizado de CRUD de contas de usuarios
-from .forms import RegisterForm ,EditAccountForm
+from .forms import RegisterForm ,EditAccountForm, PasswordResetForm
+
+from simplemooc.core.utils import generate_hash_key
+
+from .models import PasswordReset
+
+User = get_user_model()
 
 
 @login_required
@@ -25,11 +32,9 @@ def register(request):
     #adicionando valor a variavel com camiho do template
     template_name = 'accounts/register.html'
     #verificando se o metodo de envio é post
-    if request.method == 'POST':
-        #atribuir dados em variavel form
-        form = RegisterForm(request.POST)
+    form = RegisterForm(request.POST or None)
         #vereficando se é valido o formulario
-        if form.is_valid():
+    if form.is_valid():
             #salvar informação no db se dados for valido e captura os dados
             user = form.save()
             #pega usuario para automaticamente autêntica-lo e redirecionar para pagina inicial
@@ -45,6 +50,28 @@ def register(request):
     return render(request,template_name,context)
 
 
+def password_reset(request):
+    template_name = 'accounts/password_reset.html'
+    form = PasswordResetForm(request.POST or None)
+    context={}
+    if form.is_valid():
+        form.save()
+        context['success'] = True
+    context['form'] = form
+
+    return render(request,template_name,context)
+
+def password_reset_confirm(request,key):
+    template_name = 'accounts/password_reset_confirm.html'
+    context = {}
+    reset = get_object_or_404(PasswordReset,key=key)
+    form = SetPasswordForm(user=reset.user, data=request.POST or None)
+    if form.is_valid():
+        form.save()
+        context['success'] = True
+    context['form'] = form
+    return render(request,template_name,context)
+
 #metodo para editar dados de usuario
 @login_required
 def edit(request):
@@ -52,21 +79,15 @@ def edit(request):
     template_name = 'accounts/edit.html'
     # criando contexto
     context = {}
-    #verificando se o metodo de envio é post
-    if request.method == 'POST':
-        #atribuir dados em variavel form
-        form = EditAccountForm(request.POST, instance=request.user)
+    form = EditAccountForm(request.POST or None , instance=request.user)
         #vereficando se é valido o formulario
-        if form.is_valid():
+    if form.is_valid():
              #salvar informação no db se dados for valido e captura os dados
              form.save()
              # setando em instancia atual
              form = EditAccountForm(instance=request.user)
              # mensagem de sucesso se tudo ocorrer bem
              context['success'] = True
-    else:
-        form = EditAccountForm(instance=request.user)
-            #alimenttando context que ira ser passado para template edit.html
     context['form'] = form
     #retornado template juntamente com o dicionario
     return render(request,template_name,context)
@@ -79,16 +100,12 @@ def edit_password(request):
     template_name = 'accounts/edit_password.html'
      # criando contexto
     context = {}
-     #verificando se o metodo de envio é post
-    if request.method == 'POST':
-         form = PasswordChangeForm(data=request.POST, user=request.user)
-         if form.is_valid():
+    form = PasswordChangeForm(data=request.POST or None, user=request.user)
+    if form.is_valid():
              #salvar informação no db se dados for valido e captura os dados
              form.save()
              # mensagem de sucesso se tudo ocorrer bem
              context['success'] = True
-    else:
-        form = PasswordChangeForm(user=request.user)
     context['form'] = form
 
     return render(request,template_name,context)

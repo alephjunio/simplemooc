@@ -9,7 +9,7 @@
         <p>
             {{ course.description }}
         </p>
-        <button class="button-success pure-button" type="button" name="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Inscreva-se</button>
+        <a href="{% url 'course:enrollment' course.slug %}" class="button-success pure-button" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Inscreva-se</a>
         <a href="{% url 'course:index' %}" class="button-warning pure-button"> <i class="fa fa-arrow-left" aria-hidden="true"></i> voltar</a>
     </div>
 

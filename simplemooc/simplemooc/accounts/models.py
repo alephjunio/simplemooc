@@ -6,6 +6,7 @@ from django.core import validators
 #PermissionsMixin = herança de model de grupos e permissões django
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, UserManager)
 from django.conf import settings
+from simplemooc.course.models import Course
 
 
 class User(AbstractBaseUser,PermissionsMixin):
@@ -44,8 +45,8 @@ class User(AbstractBaseUser,PermissionsMixin):
 class PasswordReset(models.Model):
 
       user = models.ForeignKey(
-       settings.AUTH_USER_MODEL, verbose_name='Usuário'
-       #related_name='resets'
+       settings.AUTH_USER_MODEL, verbose_name='Usuário',
+       related_name= 'resets',
       )
       key = models.CharField('Chave', max_length=100,unique=True)
       created_at = models.DateTimeField('criado em', auto_now_add=True)
@@ -58,3 +59,28 @@ class PasswordReset(models.Model):
          verbose_name = 'Nova Senha'
          verbose_name_plural = 'Novas Senhas'
          ordering = ['-created_at']
+
+
+class Enrollment(models.Model):
+
+      STATUS_CHOICES = (
+       (0,'Pendente'),
+       (1,'Aprovado'),
+       (2,'Cancelado'),
+      )
+
+      user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Usuário',related_name= 'enrollments')
+      course = models.ForeignKey(Course, verbose_name='Curso',related_name='enrollments')
+      status = models.IntegerField('Situação', choices=STATUS_CHOICES , default=1, blank=True)
+      created_at = models.DateTimeField('criado em', auto_now_add=True)
+      updated_at = models.DateTimeField('Atualizado em', auto_now_add=True)
+
+      def active(self):
+          self.status = 1
+          self.save()
+
+
+      class Meta:
+          verbose_name = 'inscrição',
+          verbose_name_plural = 'inscrições'
+          unique_together = (('user','course'),)
