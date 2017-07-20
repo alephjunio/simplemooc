@@ -48,9 +48,14 @@
   </div>
 <br>
 <br>
-<br>
+<div class="pure-u-24-24 text-center">
+  {% for message in messages  %}
+      <p class="alert alert-info">{{ message }}</p>
+  {% endfor %}
+</div>
   {% block content %}{% endblock %}
 <br><br>
+
 
   <div class="color-footer l-box is-center">
     Simple MOOC - Uma Simples plataforma de ensino a distância.

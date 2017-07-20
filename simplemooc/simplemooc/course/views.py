@@ -5,7 +5,7 @@ from .models import Course
 from .forms import ContactCourse
 from django.contrib.auth.decorators import login_required
 from simplemooc.accounts.models import Enrollment
-
+from django.contrib import messages
 
 def index(request):
     #buscando todos os cursos
@@ -45,6 +45,9 @@ def enrollment(request,slug):
      #buscando curso deacordo com sua chave primaria, caso não exista tranferir usuario para pagina de erro 404.
      course = get_object_or_404(Course, slug=slug)
      enrollment ,created = Enrollment.objects.get_or_create(user=request.user,course=course)
-    #  if created:
-    #      enrollment.active()
+     if created:
+        # enrollment.active()
+         messages.success(request, "Parabéns Você acaba de se escrever ao curso !")
+     else:
+         messages.info(request, "Ops, Você já esta escrito neste curso.")
      return redirect('accounts:dashboard')

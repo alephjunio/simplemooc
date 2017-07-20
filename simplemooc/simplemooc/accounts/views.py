@@ -1,13 +1,14 @@
 from django.shortcuts import render,redirect, get_object_or_404
 #importando formulario de registro de contas do django
-from django.contrib.auth.forms import (UserCreationForm , PasswordChangeForm,
-     SetPasswordForm)
+from django.contrib.auth.forms import (UserCreationForm , PasswordChangeForm,SetPasswordForm)
 #importando auth e login próprio django
 from django.contrib.auth import authenticate, login, get_user_model
 #importando app django para ser solicitado login para acessar pagina
 from django.contrib.auth.decorators import login_required
 #importando settings raiz
 from django.conf import settings
+
+from django.contrib import messages
 #importando formulario personalizado de CRUD de contas de usuarios
 from .forms import RegisterForm ,EditAccountForm, PasswordResetForm
 
@@ -84,10 +85,8 @@ def edit(request):
     if form.is_valid():
              #salvar informação no db se dados for valido e captura os dados
              form.save()
-             # setando em instancia atual
-             form = EditAccountForm(instance=request.user)
-             # mensagem de sucesso se tudo ocorrer bem
              context['success'] = True
+             # mensagem de sucesso se tudo ocorrer bem
     context['form'] = form
     #retornado template juntamente com o dicionario
     return render(request,template_name,context)

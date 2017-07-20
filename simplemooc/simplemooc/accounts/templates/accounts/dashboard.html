@@ -4,7 +4,6 @@
 {% block content %}
 
 <div class="pure-g">
-
   <div class="pure-u-24-24">
     <ol class="breadcrumb breadcrumb-inverse">
       {% block  breadcrumb %}
@@ -15,6 +14,7 @@
   </div>
 
   <div class="pure-u-1-24">
+
   </div>
 
   <div class="pure-u-7-24">
@@ -54,8 +54,8 @@
 
   <div class="pure-u-2-5">
     {% block dashboard_content %}
-    <h1>Usuário: {{ user }}</h1>
-    <h1>Email: {{ user.email }}</h1>
+    <h3>Usuário: {{ user }}</h3>
+    <h3>Email: {{ user.email }}</h3>
     {% endblock  %}
 
 
