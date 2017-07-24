@@ -51,6 +51,21 @@ def enrollment(request,slug):
          messages.info(request, "Ops, Você já esta escrito neste curso.")
      return redirect('accounts:dashboard')
 
+@login_required
+def undo_enrollment(request,slug):
+    #buscando curso deacordo com sua chave primaria, caso não exista tranferir usuario para pagina de erro 404.
+    course = get_object_or_404(Course, slug=slug)
+    enrollment = get_object_or_404(Enrollment,user=request.user,course=course)
+    if request.method == 'POST':
+        enrollment.delete()
+        messages.success(request,'Sua inscrição foi cancelada com sucesso')
+    template_name = 'courses/undo_enrollment.html'
+    context = {
+     'enrollment': enrollment,
+     'course': course
+    }
+    return render(request,template_name,context)
+
 
 @login_required
 def announcements(request,slug):

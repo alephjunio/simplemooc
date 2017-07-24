@@ -94,6 +94,9 @@
            background: rgb(66, 184, 221); /* this is a light blue */
        }
 
+       .button-gray {
+           background: rgb(112, 114, 117); /* this is a light gray */
+       }
 .breadcrumb-inverse {
   background-color:transparent ;
 }

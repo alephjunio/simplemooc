@@ -1,0 +1,12 @@
+{% extends "courses/course_dashboard.html" %}
+{% block dashboard_content %}
+  <form class="" action="" method="post">
+    {% csrf_token %}
+    <div class="text-center">
+        <h4>Deseja Realmente cancelar a inscricão deste curso " <b>{{ enrollment.course }}</b> " ? <i class="fa fa-frown-o" aria-hidden="true"></i></h4>
+        <p></p>
+        <button type="submit" class="pure-button button-error"><i class="fa fa-check" aria-hidden="true"></i> Sim</button>
+        <a href="{% url 'course:announcements' enrollment.course.slug %}" class="pure-button button-gray"><i class="fa fa-ban" aria-hidden="true"></i> Não Cancelar</a>
+    </div>
+  </form>
+{% endblock dashboard_content %}

@@ -34,7 +34,7 @@
             <li class="pure-menu-heading border-button ">Meus Cursos</li>
           {% for enrollment in enrollments  %}
             <li class="pure-menu-item" >
-              <a href="{% url 'course:announcements' enrollment.course.slug %}" style="color:#104E8B;" class="list-group-item">
+              <a href="{% url 'course:announcements' enrollment.course.slug %}" class="list-group-item">
               <i class="fa fa-book" aria-hidden="true"></i> {{ enrollment.course}}
             </a>
           </li>
@@ -42,8 +42,8 @@
             <li class="list-group-item">Nenhum curso encontrado</li>
           {% endfor %}
             <li class="pure-menu-heading border-button ">Configurações de Conta</li>
-            <li class="pure-menu-item"><a  style="color:#104E8B;" class="list-group-item" href="{% url 'accounts:edit' %}"><i class="fa fa-cogs" aria-hidden="true"></i> Editar Conta</a></li>
-            <li class="pure-menu-item"><a  style="color:#104E8B;" class="list-group-item" href="{% url 'accounts:edit_password' %}"><i class="fa fa-lock" aria-hidden="true"></i> Atualizar Senha</a></li>
+            <li class="pure-menu-item"><a class="list-group-item" href="{% url 'accounts:edit' %}"><i class="fa fa-cogs" aria-hidden="true"></i> Editar Conta</a></li>
+            <li class="pure-menu-item"><a class="list-group-item" href="{% url 'accounts:edit_password' %}"><i class="fa fa-lock" aria-hidden="true"></i> Atualizar Senha</a></li>
           {% endblock menu_options %}
         </ul>
         <!--Text-->
@@ -70,7 +70,7 @@
           <p>{{ enrollment.course.description |linebreaks}}</p>
           <p>
             <a href="{% url 'course:announcements' enrollment.course.slug %}" class="button-primary pure-button"><i class="fa fa-sign-in" aria-hidden="true"></i> Acessar</a>
-            <a href="#" class="button-error pure-button"> <i class="fa fa-ban" aria-hidden="true"></i> Cancelar </a>
+            <a href="{% url 'course:undo_enrollment' enrollment.course.slug %}" class="button-error pure-button"> <i class="fa fa-ban" aria-hidden="true"></i> Cancelar </a>
           </p>
         </div>
       </div>

@@ -1,12 +1,4 @@
-{% extends "accounts/dashboard.html" %}
-{% block menu_options %}
-  <li class="pure-menu-heading border-button">{{course}}</li>
-  <li class="pure-menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i> Aulas e Materíais</a></li>
-  <li class="pure-menu-item"><i class="fa fa-info-circle" aria-hidden="true"></i> Informações</a></li>
-  <li class="pure-menu-item"><i class="fa fa-envelope" aria-hidden="true"></i> Anúncios</a></li>
-  <li class="pure-menu-item"><i class="fa fa-comments" aria-hidden="true"></i> Forum de Dúvidas</a></li>
-  {{ block.super }}
-{% endblock  %}
+{% extends "courses/course_dashboard.html" %}
 {% block dashboard_content %}
 <div class="card box-panel">
   <!--Card content-->
