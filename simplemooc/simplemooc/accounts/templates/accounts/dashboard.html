@@ -34,10 +34,11 @@
         <ul class="list-group">
           <h4 class="card-title">Meus Cursos</h4>
           <hr>
-          <li class="list-group-item activate-yellow">Cursos 1</li>
-          <li class="list-group-item activate-yellow">Cursos 2</li>
-          <li class="list-group-item activate-yellow">Cursos 3</li>
-
+          {% for enrollment in enrollments  %}
+          <li class="list-group-item activate-yellow">{{ enrollment.course}}</li>
+          {% empty %}
+           <li class="list-group-item activate-yellow">Você não possue escrições</li>
+          {% endfor %}
           <h4 class="card-title">Minha Conta<h4/>
             <hr>
            <a  class="link-panel-list" href="{% url 'accounts:edit' %}"><li class="list-group-item activate-yellow">Editar Conta</li></a>

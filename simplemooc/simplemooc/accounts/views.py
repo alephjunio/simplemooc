@@ -7,12 +7,11 @@ from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 #importando settings raiz
 from django.conf import settings
-
 from django.contrib import messages
 #importando formulario personalizado de CRUD de contas de usuarios
 from .forms import RegisterForm ,EditAccountForm, PasswordResetForm
-
 from simplemooc.core.utils import generate_hash_key
+from simplemooc.course.models import Enrollment
 
 from .models import PasswordReset
 
@@ -23,8 +22,10 @@ User = get_user_model()
 def dashboard(request):
     #adicionando valor a variavel com camiho do template
     template_name = 'accounts/dashboard.html'
+    context = {}
+    context['enrollments'] = Enrollment.objects.filter(user=request.user)
     #retornando template index
-    return render(request,template_name)
+    return render(request,template_name,context)
 
 
 
