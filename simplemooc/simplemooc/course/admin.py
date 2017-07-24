@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Course
+from .models import Course,Enrollment,Announcement,Comment
 
 class CourseAdmin(admin.ModelAdmin):
     #selecionando conteudo para que possa ser passado para o painel de admin
@@ -13,3 +13,4 @@ class CourseAdmin(admin.ModelAdmin):
 
 #adicionando modificações em sua tela de admin
 admin.site.register(Course, CourseAdmin)
+admin.site.register([Enrollment,  Announcement, Comment])
