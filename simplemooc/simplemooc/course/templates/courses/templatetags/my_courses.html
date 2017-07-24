@@ -1,0 +1,6 @@
+<li class="pure-menu-heading bold"><b>Meus Cursos</b></li>
+{% for enrollment in enrollments  %}
+<li class="pure-menu-item"><a href="#" class="list-group-item">{{ enrollment.course}}</a></li>
+{% empty %}
+ <li class="list-group-item">Nenhum curso encontrado</li>
+{% endfor %}

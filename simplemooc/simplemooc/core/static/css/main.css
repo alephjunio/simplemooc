@@ -3,9 +3,34 @@
   height: 70%;
 }
 
+.pure-button:hover{
+    text-decoration: none;
+    color:#fff;
+}
+
 .doubt{
   color:black;
   font-family: monospace;
+}
+.blue-link{
+  color:#104E8B;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.border-button{
+  border-bottom: 1px solid #EEE9E9;
+}
+
+
+.decoration-none:hover{
+  text-decoration: none;
+}
+
+.border-all{
+  border: 1px solid #EEE9E9;
 }
 
 .color-footer{
@@ -71,18 +96,4 @@
 
 .breadcrumb-inverse {
   background-color:transparent ;
-}
-
-.link-panel-list{
-  color:#7F8C8D;
-
-}
-
-.link-panel-list:hover{
-  color:#7F8C8D;
-  text-decoration: none;
-}
-
-.activate-yellow:hover{
-  background-color: #FFF0A0;
 }
