@@ -1,0 +1,75 @@
+{% extends "courses/course_dashboard.html" %}
+{% block breadcrumb %}
+  {{ block.super }}
+  <li><a href="{% url 'course:show_announcement' course.slug  announcement.pk%}">{{ announcement }}</a></li>
+{% endblock breadcrumb %}
+
+{% block dashboard_content %}
+  <div class="card box-panel">
+    <!--Card content-->
+    <div class="card-block">
+      <div class="card card-dark">
+        <!--Title-->
+        <h4 class="card-title bold">{{ announcement.title }}</h4>
+        <p>
+        {{ announcement.content|linebreaks }}
+        </p>
+        <p>
+          <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>
+            {% with coments_count=announcement.comments.count %}
+              {{ coments_count }}
+              Comentário{{ announcement.comments.count|pluralize }}
+            {% endwith %}
+           </a>
+        </p>
+      </div>
+    </div>
+    <!--/.Card content-->
+  </div>
+  <br>
+
+  <div class="card box-panel">
+    <!--Card content-->
+    <div class="card-block">
+      <div class="card card-dark">
+        <!--Title-->
+        <h4 class="card-title bold">
+          <a id='comments'>
+          <legend>Comentários <a href="#comentar">Comentar</a></legend>
+          </a>
+        </h4>
+        {% for comment in announcement.comments.all  %}
+          <b>{{ comment.user }} : {{ comment.created_at|timesince }}</b>
+          <p>{{ comment.comment|linebreaksbr}}</p>
+          <hr>
+        {% empty %}
+        <p>
+          <b>Nenhum comentário para esse anúcio.</b>
+        </p>
+      {% endfor %}
+
+
+
+        <div class="pure-g">
+            <div class="l-box-lrg pure-u-3-6 pure-u-md-2-5">
+              <h4 id="comentar">Comentário</h4>
+                <form action="" method="POST" class="pure-form pure-form-aligned">
+                  {% csrf_token %}
+                    <fieldset>
+                      {% for field in form   %}
+                      <div class="pure-control-group">
+                          {{ field }}
+                          {{ field.errors }}
+                      </div>
+                      {% endfor %}
+
+                            <button type="submit" class="pure-button pure-button-primary">Enviar</button>
+                    </fieldset>
+                </form>
+            </div>
+            </div>
+      </div>
+    </div>
+    <!--/.Card content-->
+  </div>
+{% endblock  %}

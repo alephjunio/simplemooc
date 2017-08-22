@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404,redirect
 #importando o model de cursos para trabalhar com base de dados
-from .models import Course ,Enrollment
+from .models import Course ,Enrollment, Announcement
 #importando formulario de cursos/duvidas
-from .forms import ContactCourse
+from .forms import ContactCourse, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -78,5 +78,34 @@ def announcements(request,slug):
             return redirect('accounts:dashboard')
     context = {}
     context['course'] = course
+    context['announcements'] = course.announcements.all()
     template_name = 'courses/announcements.html'
     return render(request,template_name,context)
+
+@login_required
+def show_announcement(request,slug,pk):
+    #buscando curso deacordo com sua chave primaria, caso não exista tranferir usuario para pagina de erro 404.
+    course = get_object_or_404(Course, slug=slug)
+
+    if not request.user.is_staff:
+        enrollment = get_object_or_404(Enrollment,user=request.user,course=course)
+        if not enrollment.is_approved():
+            messages.error(request, 'A sua inscrição esta pendente.')
+            return redirect('accounts:dashboard')
+    announcement = get_object_or_404(course.announcements.all(), pk=pk)
+    form = CommentForm(request.POST  or None)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user = request.user
+        comment.announcement = announcement
+        comment.save()
+        form = CommentForm()
+        messages.success(request, 'Seu comentário foi salvo com sucesso!')
+
+    template_name = 'courses/show_announcement.html'
+    context = {}
+    context['course'] = course
+    context['announcement'] = announcement
+    context['form'] = form
+
+    return render(request,template_name, context)

@@ -1,54 +1,50 @@
 {% extends "courses/course_dashboard.html" %}
 {% block dashboard_content %}
-<div class="card box-panel">
-  <!--Card content-->
-  <div class="card-block">
-    <div class="card card-dark">
-      <!--Title-->
-      <h4 class="card-title bold">Inicio das Aulas, sejam Bem-vindos</h4>
-      <p>
-        Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor lectus nibh. Proin eget tortor risus.
-      </p>
-      <p>
-        <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 35 comentários</a>
-      </p>
-    </div>
-  </div>
-  <!--/.Card content-->
-</div>
-<br>
-<div class="card box-panel">
-  <!--Card content-->
-  <div class="card-block">
-    <div class="card card-dark">
-      <!--Title-->
-      <h4 class="card-title bold">Inicio das Aulas, sejam Bem-vindos</h4>
-      <p>
-        Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor lectus nibh. Proin eget tortor risus.
-      </p>
-      <p>
-        <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 35 comentários</a>
-      </p>
-    </div>
-  </div>
-  <!--/.Card content-->
-</div>
 
-<br>
+
+{% for announcement in announcements %}
 <div class="card box-panel">
   <!--Card content-->
   <div class="card-block">
     <div class="card card-dark">
       <!--Title-->
-      <h4 class="card-title bold">Inicio das Aulas, sejam Bem-vindos</h4>
+      <h4 class="card-title bold">
+        <a href="{% url 'course:show_announcement' course.slug announcement.pk %}">
+        {{ announcement.title }}
+       </a>
+      </h4>
       <p>
-        Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor lectus nibh. Proin eget tortor risus.
+      {{ announcement.content|linebreaks }}
       </p>
       <p>
-        <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 35 comentários</a>
+        <a href="{% url 'course:show_announcement' course.slug announcement.pk %}#comments"><i class="fa fa-comments-o" aria-hidden="true"></i>
+          {% with coments_count=announcement.comments.count %}
+            {{ coments_count }}
+            Comentário{{ announcement.comments.count|pluralize }}
+          {% endwith %}
+         </a>
       </p>
     </div>
   </div>
   <!--/.Card content-->
 </div>
+<br>
+
+{% empty %}
+
+<div class="card box-panel">
+  <!--Card content-->
+  <div class="card-block">
+    <div class="card card-dark">
+      <!--Title-->
+      <h4 class="card-title bold"></h4>
+      <div class="pure-g">
+        <p class="pure-u-1-3"></p>
+        <p class="pure-u-1-3">NENHUM ANÚNCIO CRIADO </p>
+      </div>
+    </div>
+  </div>
+  <!--/.Card content-->
+</div>
+{% endfor  %}
 {% endblock  %}
