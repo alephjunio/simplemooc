@@ -5,6 +5,7 @@ from .models import Course ,Enrollment, Announcement
 from .forms import ContactCourse, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .decorators import enrollment_required
 
 def index(request):
     #buscando todos os cursos
@@ -68,14 +69,10 @@ def undo_enrollment(request,slug):
 
 
 @login_required
+@enrollment_required
 def announcements(request,slug):
     #buscando curso deacordo com sua chave primaria, caso não exista tranferir usuario para pagina de erro 404.
-    course = get_object_or_404(Course, slug=slug)
-    if not request.user.is_staff:
-        enrollment = get_object_or_404(Enrollment,user=request.user,course=course)
-        if not enrollment.is_approved():
-            messages.error(request, 'A sua inscrição esta pendente.')
-            return redirect('accounts:dashboard')
+    course = request.course
     context = {}
     context['course'] = course
     context['announcements'] = course.announcements.all()
@@ -83,15 +80,10 @@ def announcements(request,slug):
     return render(request,template_name,context)
 
 @login_required
+@enrollment_required
 def show_announcement(request,slug,pk):
     #buscando curso deacordo com sua chave primaria, caso não exista tranferir usuario para pagina de erro 404.
-    course = get_object_or_404(Course, slug=slug)
-
-    if not request.user.is_staff:
-        enrollment = get_object_or_404(Enrollment,user=request.user,course=course)
-        if not enrollment.is_approved():
-            messages.error(request, 'A sua inscrição esta pendente.')
-            return redirect('accounts:dashboard')
+    course = course = request.course
     announcement = get_object_or_404(course.announcements.all(), pk=pk)
     form = CommentForm(request.POST  or None)
     if form.is_valid():
