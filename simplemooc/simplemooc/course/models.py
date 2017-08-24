@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 from simplemooc.core.mail import send_mail_template
 
@@ -40,6 +41,11 @@ class Course(models.Model):
         def get_absolute_url(self):
             return ('course:details',(),{'slug': self.slug })
 
+#retornando somente as lições disponiveis
+        def release_lessons(self):
+            today = timezone.now().date()
+            return self.lessons.filter(release_date__gte=today)
+
 #traduzindo nomes atraves de metas
         class Meta:
             verbose_name = 'Curso'
@@ -62,6 +68,12 @@ class Lesson(models.Model):
     def __str__(self):
         return self.name
 
+    def is_available(self):
+        if self.release_date:
+            today = timezone.now().date()
+            return self.release_date >= today
+        return False
+
 
     class Meta:
         verbose_name = 'Aula'
@@ -74,7 +86,7 @@ class Material(models.Model):
     embedded = models.TextField('Video embedded', blank=True)
     file = models.FileField(upload_to='lesson/materials', blank=True)
 
-    lesson = models.ForeignKey(Lesson,verbose_name='Aula', related_name='materiais')
+    lesson = models.ForeignKey(Lesson,verbose_name='Aula', related_name='materials')
 
     def is_embedded(self):
         return bool(self.embedded)

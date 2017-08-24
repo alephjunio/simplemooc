@@ -1,16 +1,33 @@
 {% extends "accounts/dashboard.html" %}
 
 {% block breadcrumb %}
-  {{ block.super }}
-  <li><a href="{% url 'course:announcements' course.slug %}">{{ course }}</a></li>
+{{ block.super }}
+<li><a href="{% url 'course:announcements' course.slug %}">{{ course }}</a></li>
 {% endblock breadcrumb %}
 
 
 {% block menu_options %}
-  <li class="pure-menu-heading border-button">{{course}}</li>
-  <li class="pure-menu-item"><a href="#" class="list-group-item"><i class="fa fa-video-camera" aria-hidden="true"></i> Aulas e Materíais</a></li>
-  <li class="pure-menu-item"><a href="#" class="list-group-item"><i class="fa fa-info-circle" aria-hidden="true"></i> Informações</a></li>
-  <li class="pure-menu-item"><a href="#" class="list-group-item"><i class="fa fa-envelope" aria-hidden="true"></i> Anúncios</a></li>
-  <li class="pure-menu-item"><a href="#" class="list-group-item"><i class="fa fa-comments" aria-hidden="true"></i> Forum de Dúvidas</a></li>
-  {{ block.super }}
+<li class="pure-menu-heading border-button">{{course}}</li>
+
+<li class="pure-menu-item">
+  <a href="{% url 'course:lessons' course.slug %}" class="list-group-item"><i class="fa fa-video-camera" aria-hidden="true"></i> Aulas e Materíais
+  </a>
+</li>
+
+<li class="pure-menu-item">
+  <a href="#" class="list-group-item"><i class="fa fa-info-circle" aria-hidden="true"></i> Informações
+  </a>
+</li>
+
+<li class="pure-menu-item">
+  <a href="{% url 'course:announcements' course.slug %}" class="list-group-item">
+    <i class="fa fa-envelope" aria-hidden="true"></i> Anúncios
+  </a>
+</li>
+
+<li class="pure-menu-item">
+  <a href="#" class="list-group-item"><i class="fa fa-comments" aria-hidden="true"></i> Forum de Dúvidas
+  </a>
+</li>
+{{ block.super }}
 {% endblock  %}

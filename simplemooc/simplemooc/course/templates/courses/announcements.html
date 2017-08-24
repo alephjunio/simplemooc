@@ -1,4 +1,8 @@
 {% extends "courses/course_dashboard.html" %}
+{% block breadcrumb %}
+    {{ block.super }}
+    <li><a href="{% url 'course:announcements' course.slug %}">Anúncios</a></li>
+{% endblock %}
 {% block dashboard_content %}
 
 
@@ -32,18 +36,7 @@
 
 {% empty %}
 
-<div class="card box-panel">
-  <!--Card content-->
-  <div class="card-block">
-    <div class="card card-dark">
-      <!--Title-->
-      <h4 class="card-title bold"></h4>
-      <div class="pure-g">
-        <p class="pure-u-1 alert alert-info">NENHUM ANÚNCIO CRIADO </p>
-      </div>
-    </div>
-  </div>
-  <!--/.Card content-->
-</div>
+<h3 class="pure-u-1 alert alert-info">Nenhum anúncio Criado </h3>
+
 {% endfor  %}
 {% endblock  %}

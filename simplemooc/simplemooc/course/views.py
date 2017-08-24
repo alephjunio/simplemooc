@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404,redirect
 #importando o model de cursos para trabalhar com base de dados
-from .models import Course ,Enrollment, Announcement
+from .models import Course ,Enrollment, Announcement,Lesson, Material
 #importando formulario de cursos/duvidas
 from .forms import ContactCourse, CommentForm
 from django.contrib.auth.decorators import login_required
@@ -101,3 +101,52 @@ def show_announcement(request,slug,pk):
     context['form'] = form
 
     return render(request,template_name, context)
+
+
+@login_required
+@enrollment_required
+def lessons(request,slug):
+    course = request.course
+    lessons = course.release_lessons()
+    template_name = 'courses/lessons.html'
+    if request.user.is_staff:
+        lessons = course.lessons.all()
+    context = {
+        'course': course,
+        'lessons': lessons
+    }
+    return render(request, template_name, context)
+
+@login_required
+@enrollment_required
+def lesson(request,pk,slug):
+    course = request.course
+    lesson = get_object_or_404(Lesson, pk=pk, course=course)
+    if not request.user.is_staff and not lesson.is_available():
+        messages.error(request, 'Esta aula não está disponível')
+        return redirect('course:lessons', slug=course.slug)
+    template = 'courses/lesson.html'
+    context = {
+        'course': course,
+        'lesson': lesson
+    }
+    return render(request, template, context)
+
+@login_required
+@enrollment_required
+def material(request, slug, pk):
+    course = request.course
+    material = get_object_or_404(Material, pk=pk, lesson__course=course)
+    lesson = material.lesson
+    if not request.user.is_staff and not lesson.is_available():
+        messages.error(request, 'Este material não está disponível')
+        return redirect('courses:lesson', slug=course.slug, pk=lesson.pk)
+    if not material.is_embedded():
+        return redirect(material.file.url)
+    template = 'courses/material.html'
+    context = {
+        'course': course,
+        'lesson': lesson,
+        'material': material,
+    }
+    return render(request, template, context)
