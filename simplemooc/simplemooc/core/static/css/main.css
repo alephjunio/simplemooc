@@ -8,6 +8,7 @@
     color:#fff;
 }
 
+
 .doubt{
   color:black;
   font-family: monospace;
@@ -56,6 +57,8 @@
   border: none;
 }
 
+
+
 .list-group-item:first-child{
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -67,6 +70,7 @@
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 
 
 .button-success,
@@ -97,6 +101,7 @@
        .button-gray {
            background: rgb(112, 114, 117); /* this is a light gray */
        }
+
 .breadcrumb-inverse {
   background-color:transparent ;
 }

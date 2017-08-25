@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <ul class="breadcrumb breadcrumb-inverse">
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li><a href="{% url 'forum:index' %}">Fórum de Discussões</a></li>
+        </ul>
+    </div>
+
+    <div class="pure-g">
+        <div class="pure-u-2-24"></div>
+        <div class="pure-u-7-24">
+            <div class="card box-panel">
+                <!--Card content-->
+                <div class="card-block">
+                    <div class="card card-dark">
+                        <ul class="list-group">
+                            <li class="pure-menu-heading border-button">
+                                Tópicos do Fórum
+                            </li>
+                            <li class="list-group-item">
+                                <a class="list-group-item"  href="?order=">
+                                    <i class="fa fa-refresh"></i>
+                                    Mais Recentes
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="list-group-item"  href="?order=views">
+                                    <i class="fa fa-eye"></i>
+                                    Mais Visualizados
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="list-group-item"  href="?order=answers">
+                                    <i class="fa fa-comments-o"></i>
+                                    Mais Comentados
+                                </a>
+                            </li>
+                            <li class="pure-menu-heading border-button">Tags</li>
+                            <li class="list-group-item">
+                                {% for tag in tags %}
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-tag"></i>
+                                    {{ tag }}
+                                </a>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="pure-u-1-24"></div>
+        <div class="pure-u-12-24">
+            <div class="inner">
+                {% for thread in object_list %}
+                <div class="card box-panel">
+                    <!--Card content-->
+                    <div class="card-block">
+                        <div class="card card-dark">
+                    <h3><a class="bold" href="" title="">{{ thread.title }}</a></h3>
+                    <br>
+                    <h5 class="bold">
+                        Criado por {{ thread.author }} | {{ thread.answers }} resposta{{ thread.answers|pluralize }} | {{ thread.views }} Visualizaç{{ thread.views|pluralize:"ão,ões" }}
+                    </h5>
+                    <p>
+                        <i class="fa fa-tags"></i>
+                        Tags:
+                        {% for tag in thread.tags.all %}
+                        <a href="" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                        <div class="text-right">
+                            <a class="fright" href="" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
+                        </div>
+                    </p>
+                </div>
+                </div>
+                </div>
+                <br>
+                {% empty %}
+                <div class="row">
+                    <div class="text-center">
+                        <h4 class="alert alert-info">
+                            Nenhuma descução foi iniciada
+                        </h4>
+                    </div>
+                </div>
+                {% endfor %}
+                <ul class="pagination pagination-centered">
+                    {% if page_obj.has_previous %}
+                    <li>
+                        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">Anterior</a>
+                    </li>
+                    {% endif %}
+                    {% for page in paginator.page_range %}
+                    <li{% if page == page_obj.number %} class="active"{% endif %}>
+                    <a href="?page={{ page }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">{{ page }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li>
+                    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">Próxima</a>
+                </li>
+
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}
