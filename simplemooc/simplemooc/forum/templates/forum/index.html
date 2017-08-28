@@ -20,7 +20,9 @@
                     <div class="card card-dark">
                         <ul class="list-group">
                             <li class="pure-menu-heading border-button">
-                                Tópicos do Fórum
+                                <a class="list-group-item"  href="{% url 'forum:index'%}">
+                            Tópicos do Fórum
+                                </a>
                             </li>
                             <li class="list-group-item">
                                 <a class="list-group-item"  href="?order=">
@@ -41,17 +43,16 @@
                                 </a>
                             </li>
                             <li class="pure-menu-heading border-button">Tags</li>
-                            <li class="list-group-item">
-                                {% for tag in tags %}
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-tag"></i>
-                                    {{ tag }}
-                                </a>
-                                {% endfor %}
-                            </li>
+                            {% for tag in tags %}
+                            <a href="{% url 'forum:index_tagged' tag.slug %}" class="list-group-item">
+                                <i class="fa fa-tag"></i>
+                                {{ tag }}
+                            </a>
+                            {% empty %}
+                            <p class="list-group-item" >Não existe nenhuma tag</p>
+                            {% endfor %}
                         </ul>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -63,23 +64,23 @@
                     <!--Card content-->
                     <div class="card-block">
                         <div class="card card-dark">
-                    <h3><a class="bold" href="" title="">{{ thread.title }}</a></h3>
-                    <br>
-                    <h5 class="bold">
-                        Criado por {{ thread.author }} | {{ thread.answers }} resposta{{ thread.answers|pluralize }} | {{ thread.views }} Visualizaç{{ thread.views|pluralize:"ão,ões" }}
-                    </h5>
-                    <p>
-                        <i class="fa fa-tags"></i>
-                        Tags:
-                        {% for tag in thread.tags.all %}
-                        <a href="" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}
-                        {% endfor %}
-                        <div class="text-right">
-                            <a class="fright" href="" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
+                            <h3><a class="bold" href="{{ thread.get_absolute_url }}" title="">{{ thread.title }}</a></h3>
+                            <br>
+                            <h5 class="bold">
+                                Criado por {{ thread.author }} | {{ thread.answers }} resposta{{ thread.answers|pluralize }} | {{ thread.views }} Visualizaç{{ thread.views|pluralize:"ão,ões" }}
+                            </h5>
+                            <p>
+                                <i class="fa fa-tags"></i>
+                                Tags:
+                                {% for tag in thread.tags.all %}
+                                <a href="{% url 'forum:index_tagged' tag.slug %}" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+                                {% endfor %}
+                                <div class="text-right">
+                                    <a class="fright" href="{{ thread.get_absolute_url }}" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
+                                </div>
+                            </p>
                         </div>
-                    </p>
-                </div>
-                </div>
+                    </div>
                 </div>
                 <br>
                 {% empty %}

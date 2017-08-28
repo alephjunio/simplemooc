@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for simplemooc project.
 
@@ -37,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #libs
+    # Libs
     'taggit',
-    #adicionando novos apps
+    # Adicionando novos apps
     'simplemooc.core',
     'simplemooc.accounts',
     'simplemooc.course',
