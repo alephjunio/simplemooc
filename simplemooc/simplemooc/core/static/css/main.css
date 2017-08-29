@@ -8,6 +8,32 @@
     color:#fff;
 }
 
+.custom-restricted-width {
+    /* To limit the menu width to the content of the menu: */
+    display: inline-block;
+    /* Or set the width explicitly: */
+    /* width: 10em; */
+}
+
+a:hover {
+    /* To limit the menu width to the content of the menu: */
+    text-decoration: none;
+    /* Or set the width explicitly: */
+    /* width: 10em; */
+}
+
+.tags-menu{
+  color: #7F8C8D;
+  margin-right: 2px;
+  padding: 2px;
+}
+
+.tags-menu:hover{
+  background-color: #EEEEEE;
+  margin-right: 2px;
+  padding: 2px;
+}
+
 
 .doubt{
   color:black;
@@ -26,9 +52,6 @@
 }
 
 
-.decoration-none:hover{
-  text-decoration: none;
-}
 
 .border-all{
   border: 1px solid #EEE9E9;
@@ -71,6 +94,9 @@
     border-bottom-left-radius: 0;
 }
 
+.hidden{
+  display: :none;
+}
 
 
 .button-success,

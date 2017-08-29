@@ -18,33 +18,34 @@
                 <!--Card content-->
                 <div class="card-block">
                     <div class="card card-dark">
-                        <ul class="list-group">
+                        <ul class="pure-menu-list">
                             <li class="pure-menu-heading border-button">
-                                <a class="list-group-item"  href="{% url 'forum:index'%}">
+                                <a class="pure-menu-link decoration-none"  href="{% url 'forum:index'%}">
                             Tópicos do Fórum
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a class="list-group-item"  href="?order=">
+                            <li class="pure-menu-item">
+                                <a class="pure-menu-link decoration-none"  href="?order=">
                                     <i class="fa fa-refresh"></i>
                                     Mais Recentes
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a class="list-group-item"  href="?order=views">
+                            <li class="pure-menu-item">
+                                <a class="pure-menu-link decoration-none"  href="?order=views">
                                     <i class="fa fa-eye"></i>
                                     Mais Visualizados
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a class="list-group-item"  href="?order=answers">
+                            <li class="pure-menu-item">
+                                <a class="pure-menu-link decoration-none"  href="?order=answers">
                                     <i class="fa fa-comments-o"></i>
                                     Mais Comentados
                                 </a>
                             </li>
                             <li class="pure-menu-heading border-button">Tags</li>
+                            <br>
                             {% for tag in tags %}
-                            <a href="{% url 'forum:index_tagged' tag.slug %}" class="list-group-item">
+                            <a href="{% url 'forum:index_tagged' tag.slug %}" class="tags-menu decoration-none">
                                 <i class="fa fa-tag"></i>
                                 {{ tag }}
                             </a>

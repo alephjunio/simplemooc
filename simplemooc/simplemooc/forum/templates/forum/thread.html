@@ -16,38 +16,39 @@
                 <!--Card content-->
                 <div class="card-block">
                     <div class="card card-dark">
-                        <ul class="list-group">
+                        <ul class="pure-menu-list">
                             <li class="pure-menu-heading border-button">
-                                <a class="list-group-item"  href="{% url 'forum:index'%}">
+                                <a class="pure-menu-link decoration-none"  href="{% url 'forum:index'%}">
                                     Tópicos do Fórum
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a class="list-group-item"  href="?order=">
+                            <li class="pure-menu-item">
+                                <a class="pure-menu-link decoration-none"  href="?order=">
                                     <i class="fa fa-refresh"></i>
                                     Mais Recentes
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a class="list-group-item"  href="?order=views">
+                            <li class="pure-menu-item">
+                                <a class="pure-menu-link decoration-none"  href="?order=views">
                                     <i class="fa fa-eye"></i>
                                     Mais Visualizados
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a class="list-group-item"  href="?order=answers">
+                            <li class="pure-menu-item">
+                                <a class="pure-menu-link decoration-none"  href="?order=answers">
                                     <i class="fa fa-comments-o"></i>
                                     Mais Comentados
                                 </a>
                             </li>
                             <li class="pure-menu-heading border-button">Tags</li>
+                            <br>
                             {% for tag in tags %}
-                            <a href="{% url 'forum:index_tagged' tag.slug %}" class="list-group-item">
+                            <a href="{% url 'forum:index_tagged' tag.slug %}" class="tags-menu decoration-none">
                                 <i class="fa fa-tag"></i>
                                 {{ tag }}
                             </a>
                             {% empty %}
-                            <p class="list-group-item" >Não existe nenhuma tag</p>
+                            <p class="pure-menu-item" >Não existe nenhuma tag</p>
                             {% endfor %}
                         </ul>
                     </div>
@@ -81,8 +82,16 @@
                     <!--Card content-->
                     <div class="card-block">
                         <div class="card card-dark">
-                            <h4 id="comments">Respostas
-                                <a class="fright" href="#add_comment">Responder</a></h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <h4 id="comments">Respostas</h4>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a class="fright bold" href="#add_comment">#Responder</a>
+                                    </div>
+                                </div>
+                            </div>
                                 {% for reply in object.replies.all %}
                                 <hr/>
                                 <p>
@@ -90,8 +99,59 @@
                                     <br/>
                                     {{ reply.reply|linebreaksbr }}
                                     <br/>
+                                    <div class="pure-g">
+                                        <div class="pure-u-5-5">
 
+                                            {% if object.author == user %}
+                                                <a class="pure-button button-error pure-button reply-cancel-correct-lnk {% if not reply.correct %} hidden {% endif %}" href="{% url 'forum:reply_incorrect' reply.pk %}" >
+                                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                                    Cancelar Resposta
+                                                </a>
+
+                                                <a class="pure-button button-success pure-button reply-correct-lnk" href="{% url 'forum:reply_correct' reply.pk %}" >
+                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                                    Resposta Correta
+                                                </a>
+
+                                            <div class="pure-u-2-5 {% if not reply.correct %} hidden {% endif %}">
+                                                <div class="alert-success text-center reply-correct-msg">
+                                                    <p>Resposta indicada pelo Autor
+                                                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <br class="reply-correct-msg {% if not reply.correct %} hidden {% endif %}">
+
+                                            {% elif reply.correct %}
+
+                                            <a class="pure-button button-success pure-button" href="{% url 'forum:reply_correct' reply.pk %}" >
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                                Resposta Correta
+                                            </a>
+
+                                            <div class="pure-u-2-5">
+                                                <div class="alert-success text-center">
+                                                    <p>Resposta indicada pelo Autor
+                                                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </p>
+                                {% empty %}
+
+                                <div class="alert-info text-center">
+                                    <p>Ninguém respondeu ainda.</p>
+                                </div>
+
+
                                 {% endfor %}
                                 <hr />
                                 <form method="post" class="pure-form pure-form-stacked" id="add_comment">
@@ -116,6 +176,46 @@
                 </div>
             </div>
         </div>
-
     </div>
     {% endblock %}
+
+    {% block scripts %}
+<script type="text/javascript">
+    $(".reply-cancel-correct-lnk").on("click", function(e){
+        e.preventDefault();
+        var $this = $(this);
+        var $p = $this.closest("p");
+        $.get($this.attr('href'), function(data){
+            if(data.success){
+                $p.find(".reply-correct-msg").addClass('hidden');
+                $this.addClass('hidden');
+                $p.find('.reply-correct-lnk').removeClass('hidden');
+            } else {
+                alert(data.message);
+            }
+        }, "json");
+        location.reload();
+        return false;
+    });
+    $('.reply-correct-lnk').on('click', function(e){
+        e.preventDefault();
+        var $this = $(this);
+        var $p = $this.closest("p");
+        $.get($this.attr('href'), function(data){
+            if(data.success){
+                $("#div-comments .reply-correct-msg").addClass('hidden');
+                $("#div-comments .reply-cancel-correct-lnk").addClass('hidden');
+                $("#div-comments .reply-correct-lnk").removeClass('hidden');
+
+                $p.find(".reply-correct-msg").removeClass('hidden');
+                $this.addClass('hidden');
+                $p.find('.reply-cancel-correct-lnk').removeClass('hidden');
+            } else {
+                alert(data.message)
+            }
+        }, 'json');
+        location.reload();
+        return false;
+    })
+</script>
+{% endblock %}

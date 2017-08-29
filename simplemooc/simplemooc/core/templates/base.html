@@ -9,10 +9,6 @@
 
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
   <!--[if lte IE 8]>
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">
   <![endif]-->
@@ -20,7 +16,7 @@
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
   <!--<![endif]-->
 
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
 
@@ -30,7 +26,9 @@
   <!--[if gt IE 8]><!-->
   <link rel="stylesheet" href="{% static 'css/marketing.css' %}">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
-  <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+  <script  src="https://code.jquery.com/jquery-3.2.1.js"  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="  crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
   <!--<![endif]-->
 </head>
 <body>
@@ -38,7 +36,6 @@
   <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
       <a class="pure-menu-heading border-all decoration-none" href="{% url 'core:home' %}">Simple MOOC</a>
-
       <ul class="pure-menu-list">
         <li class="pure-menu-item"><a href="{% url 'core:home' %}" class="pure-menu-link"><b>Home</b></a></li>
         <li class="pure-menu-item"><a href="{% url 'course:index' %}" class="pure-menu-link">Cursos</a></li>
@@ -53,21 +50,21 @@
       </ul>
     </div>
   </div>
-<br>
-<br>
+<br><br><br>
 <div class="pure-u-24-24 text-center">
   {% for message in messages  %}
-      <p class="alert alert-info">{{ message }}</p>
+        <p class="alert alert-info">{{ message }}</p>
   {% endfor %}
 </div>
   {% block content %}{% endblock %}
 <br><br>
-
-
   <div class="color-footer l-box is-center">
     Simple MOOC - Uma Simples plataforma de ensino a distância.
   </div>
-
 </body>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+{% block scripts %}{% endblock scripts %}
+
+
+
 </html>

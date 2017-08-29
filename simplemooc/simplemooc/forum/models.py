@@ -58,7 +58,7 @@ class Reply(models.Model):
         verbose_name_plural = 'Respostas'
         ordering = ['-correct', 'created']
 
-
+# Informar resposta Correta e submete-la
 def post_save_reply(created, instance, **kwargs):
     instance.thread.answers = instance.thread.replies.count()
     instance.thread.save()
