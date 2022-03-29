@@ -14,7 +14,7 @@ mercurial==3.7.3
 mysql-connector-python==2.0.4
 mysql-utilities==1.6.1
 ndg-httpsclient==0.4.0
-paramiko==1.16.0
+paramiko==2.10.1
 pbr==1.8.0
 pexpect==4.0.1
 psycopg2==2.7.1
